@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Bank\Event;
 
+use http\Exception\InvalidArgumentException;
+
 class Withdraw implements Event
 {
     /**
@@ -13,6 +15,10 @@ class Withdraw implements Event
 
     public function __construct(int $amount)
     {
+        if ($amount <= 0) {
+            throw new \InvalidArgumentException("Can't withdraw negative amount");
+        }
+
         $this->amount = $amount;
     }
 
