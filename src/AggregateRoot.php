@@ -8,7 +8,7 @@ use Bank\Event\Event;
 
 class AggregateRoot
 {
-    private $events = [];
+    protected $events = [];
 
     protected function record(Event $event): void
     {
@@ -21,5 +21,10 @@ class AggregateRoot
         $apply = 'apply' . (new \ReflectionClass($event))->getShortName();
 
         $this->$apply($event);
+    }
+
+    public function getEvents(): array
+    {
+        return $this->events;
     }
 }

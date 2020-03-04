@@ -5,16 +5,20 @@ declare(strict_types=1);
 namespace Bank;
 
 use Bank\Event\Deposit;
+use Bank\Event\Event;
 use Bank\Event\Withdraw;
-use http\Exception\RuntimeException;
 
 class Bank extends AggregateRoot implements BankService
 {
-    private $balance;
+    protected $balance;
 
-    public function __construct()
+    /** @var Projector */
+    private $projector;
+
+    public function __construct(Projector $projector)
     {
         $this->balance = 0; // add as event
+        $this->projector = $projector;
     }
 
     public function deposit(int $amount): void
@@ -29,7 +33,21 @@ class Bank extends AggregateRoot implements BankService
 
     public function printStatement(): void
     {
-        // TODO: Implement printStatement() method.
+        $aggregate = new self();
+        $events = $this->events;
+        $reconstitute = [];
+
+        /** @var Event $event */
+        foreach ($events as $event) {
+            $aggregate->record($event);
+
+            $reconstitute[] = [
+                $event->getAmount(),
+                $aggregate->getBalance()
+            ];
+        }
+
+        $this->projector->project($reconstitute);
     }
 
     protected function applyDeposit(Deposit $event)
