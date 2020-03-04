@@ -33,7 +33,7 @@ class Bank extends AggregateRoot implements BankService
 
     public function printStatement(): void
     {
-        $aggregate = new self();
+        $aggregate = new self(new Projector());
         $events = $this->events;
         $reconstitute = [];
 
