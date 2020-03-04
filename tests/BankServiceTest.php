@@ -4,42 +4,58 @@ declare(strict_types=1);
 namespace Tests\Bank;
 
 use Bank\Bank;
+use Bank\Projector;
 use PHPUnit\Framework\TestCase;
 
 final class BankServiceTest extends TestCase
 {
+    /**
+     * @var Bank
+     */
+    private $bank;
+
+    protected function setUp()
+    {
+        $this->bank = new Bank(new Projector());
+    }
+
     public function testShouldAddAmountToDeposit(): void
     {
-        $bank = new Bank();
-        $bank->deposit(200);
+        $this->bank->deposit(200);
 
-        self::assertEquals(200, $bank->getBalance());
+        self::assertEquals(200, $this->bank->getBalance());
     }
 
     public function testShouldAddTwoTimesAmountToDeposit(): void
     {
-        $bank = new Bank();
-        $bank->deposit(200);
-        $bank->deposit(400);
+        $this->bank->deposit(200);
+        $this->bank->deposit(400);
 
-        self::assertEquals(600, $bank->getBalance());
+        self::assertEquals(600, $this->bank->getBalance());
     }
 
     public function testShouldDepositAmountAndWithdrawTheSameAmount(): void
     {
-        $bank = new Bank();
-        $bank->deposit(200);
-        $bank->withdraw(200);
+        $this->bank->deposit(200);
+        $this->bank->withdraw(200);
 
-        self::assertEquals(0, $bank->getBalance());
+        self::assertEquals(0, $this->bank->getBalance());
     }
 
     public function testShouldThrowAnRuntimeExceptionWhenWithdrawMoreMoneyThanInAccount(): void
     {
         self::expectException(\RuntimeException::class);
 
-        $bank = new Bank();
-        $bank->deposit(200);
-        $bank->withdraw(400);
+        $this->bank->deposit(200);
+        $this->bank->withdraw(400);
+    }
+
+    public function testShouldReturnEvents(): void
+    {
+        $this->bank->deposit(100);
+        $this->bank->deposit(200);
+        $this->bank->withdraw(300);
+
+        $this->bank->printStatement();
     }
 }
