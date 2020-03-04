@@ -6,7 +6,7 @@ use Bank\Event\Deposit;
 use Bank\Event\Event;
 use PHPUnit\Framework\TestCase;
 
-class DepositEventTest extends TestCase
+class DepositTest extends TestCase
 {
     public function testShouldCreateNewDepositEvent(): void
     {
