@@ -1,8 +1,10 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Bank\Event;
 
-class DepositEvent implements Event
+class Deposit implements Event
 {
     /**
      * @var int
