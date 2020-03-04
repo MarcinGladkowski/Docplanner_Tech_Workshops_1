@@ -18,18 +18,12 @@ class Bank extends AggregateRoot implements BankService
 
     public function deposit(int $amount): void
     {
-        if ($amount <= 0) {
-            throw new \RuntimeException("Can't deposit in negative amount.");
-        }
-
         $this->record(new Deposit($amount));
     }
 
     public function withdraw(int $amount): void
     {
-        $this->applyWithdraw(
-          new Withdraw($amount)
-        );
+        $this->record(new Withdraw($amount));
     }
 
     public function printStatement(): void
@@ -42,9 +36,9 @@ class Bank extends AggregateRoot implements BankService
         $this->balance += $event->getAmount();
     }
 
-    protected function applyWithdraw(Withdraw $param)
+    protected function applyWithdraw(Withdraw $event)
     {
-
+        $this->balance -= $event->getAmount();
     }
 
     /**

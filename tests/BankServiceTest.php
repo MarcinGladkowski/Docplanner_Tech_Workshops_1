@@ -24,4 +24,13 @@ final class BankServiceTest extends TestCase
 
         self::assertEquals(600, $bank->getBalance());
     }
+
+    public function testShouldDepositAmountAndWithdrawTheSameAmount(): void
+    {
+        $bank = new Bank();
+        $bank->deposit(200);
+        $bank->withdraw(200);
+
+        self::assertEquals(0, $bank->getBalance());
+    }
 }
