@@ -13,6 +13,10 @@ class Deposit implements Event
 
     public function __construct(int $amount)
     {
+        if ($amount <= 0) {
+            throw new \InvalidArgumentException("Can't deposit negative amount");
+        }
+
         $this->amount = $amount;
     }
 

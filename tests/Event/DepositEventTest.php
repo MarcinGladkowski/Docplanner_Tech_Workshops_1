@@ -18,4 +18,11 @@ class DepositEventTest extends TestCase
     {
         self::assertEquals(200,(new Deposit(200))->getAmount());
     }
+
+    public function testShouldThrowExceptionWhenTryDepositNegativeAmount(): void
+    {
+        self::expectException(\InvalidArgumentException::class);
+
+        new Deposit(-200);
+    }
 }
