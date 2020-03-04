@@ -33,4 +33,13 @@ final class BankServiceTest extends TestCase
 
         self::assertEquals(0, $bank->getBalance());
     }
+
+    public function testShouldThrowAnRuntimeExceptionWhenWithdrawMoreMoneyThanInAccount(): void
+    {
+        self::expectException(\RuntimeException::class);
+
+        $bank = new Bank();
+        $bank->deposit(200);
+        $bank->withdraw(400);
+    }
 }

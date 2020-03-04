@@ -6,6 +6,7 @@ namespace Bank;
 
 use Bank\Event\Deposit;
 use Bank\Event\Withdraw;
+use http\Exception\RuntimeException;
 
 class Bank extends AggregateRoot implements BankService
 {
@@ -38,6 +39,10 @@ class Bank extends AggregateRoot implements BankService
 
     protected function applyWithdraw(Withdraw $event)
     {
+        if ($event->getAmount() > $this->balance) {
+            throw new \RuntimeException("Can't withdraw more many than an is in balance");
+        }
+
         $this->balance -= $event->getAmount();
     }
 
