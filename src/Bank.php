@@ -7,6 +7,7 @@ namespace Bank;
 use Bank\Event\Deposit;
 use Bank\Event\Event;
 use Bank\Event\Withdraw;
+use Bank\View\EventView;
 
 class Bank extends AggregateRoot implements BankService
 {
@@ -35,17 +36,11 @@ class Bank extends AggregateRoot implements BankService
     {
         $aggregate = new self(new Projector());
         $events = $this->events;
-        $reconstitute = [];
 
-        /** @var Event $event */
-        foreach ($events as $event) {
+        $reconstitute = array_map(static function(Event $event) use ($aggregate) {
             $aggregate->record($event);
-
-            $reconstitute[] = [
-                $event->getAmount(),
-                $aggregate->getBalance()
-            ];
-        }
+            return new EventView($event->getAmount(), $aggregate->getBalance());
+        }, $events);
 
         $this->projector->project($reconstitute);
     }
