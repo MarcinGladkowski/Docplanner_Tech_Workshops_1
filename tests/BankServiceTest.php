@@ -5,6 +5,7 @@ namespace Tests\Bank;
 
 use Bank\Bank;
 use Bank\Projector;
+use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 
 final class BankServiceTest extends TestCase
@@ -50,12 +51,17 @@ final class BankServiceTest extends TestCase
         $this->bank->withdraw(400);
     }
 
-    public function testShouldReturnEvents(): void
+    public function testShouldRunProjectMethod(): void
     {
-        $this->bank->deposit(100);
-        $this->bank->deposit(200);
-        $this->bank->withdraw(300);
+        /** @var Projector|MockObject $projector */
+        $projector = $this->createMock(Projector::class);
+        $projector->expects(self::once())->method('project');
 
-        $this->bank->printStatement();
+        $bank = new Bank($projector);
+        $bank->deposit(100);
+        $bank->deposit(200);
+        $bank->withdraw(300);
+
+        $bank->printStatement();
     }
 }

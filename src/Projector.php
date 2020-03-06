@@ -15,9 +15,9 @@ class Projector
     {
         rsort($reconstitute);
 
-        echo "Kwota || Saldo".PHP_EOL;
+        echo '|| '.str_pad('Kwota',5,' ') . ' || ' . str_pad('Saldo', 5, ' ') . PHP_EOL;
         foreach ($reconstitute as $event) {
-            echo $event->getAmount() . ' ' . $event->getBalance() . PHP_EOL;
+            echo '|| '.str_pad((string) $event->getAmount(),5,' ') . ' || ' . str_pad((string) $event->getBalance(), 5, ' ') . PHP_EOL;
         }
     }
 
