@@ -10,8 +10,9 @@ class Projector
     {
         rsort($reconstitute);
 
+        echo "Kwota || Saldo".PHP_EOL;
         foreach ($reconstitute as $row) {
-            echo $row;
+            echo $row[0] . ' ' . $row[1] . PHP_EOL;
         }
     }
 
