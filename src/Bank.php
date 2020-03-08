@@ -42,7 +42,7 @@ final class Bank extends AggregateRoot implements BankService
         $reconstitute = \array_map(static function(Event $event) use ($aggregate) {
             $aggregate->record($event);
 
-            return new EventView($event->getAmount(), $aggregate->getBalance());
+            return new EventView($event->getAmount(), $aggregate->getBalance(), $event->getDateTime());
         }, $events);
 
         $this->projector->project($reconstitute);

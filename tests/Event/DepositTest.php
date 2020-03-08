@@ -10,19 +10,19 @@ class DepositTest extends TestCase
 {
     public function testShouldCreateNewDepositEvent(): void
     {
-        self::assertInstanceOf(Deposit::class, new Deposit(200));
-        self::assertInstanceOf(Event::class, new Deposit(200));
+        self::assertInstanceOf(Deposit::class, new Deposit(200, new \DateTime()));
+        self::assertInstanceOf(Event::class, new Deposit(200, new \DateTime()));
     }
 
     public function testShouldReturnCorrectAmount(): void
     {
-        self::assertEquals(200,(new Deposit(200))->getAmount());
+        self::assertEquals(200,(new Deposit(200, new \DateTime()))->getAmount());
     }
 
     public function testShouldThrowExceptionWhenTryDepositNegativeAmount(): void
     {
         self::expectException(\InvalidArgumentException::class);
 
-        new Deposit(-200);
+        new Deposit(-200, new \DateTime());
     }
 }

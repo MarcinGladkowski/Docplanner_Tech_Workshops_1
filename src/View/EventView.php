@@ -2,21 +2,28 @@
 
 namespace Bank\View;
 
-class EventView
+final class EventView
 {
     /**
      * @var int
      */
     private $amount;
+
     /**
      * @var int
      */
     private $balance;
 
-    public function __construct(int $amount, int $balance)
+    /**
+     * @var \DateTime
+     */
+    private $dateTime;
+
+    public function __construct(int $amount, int $balance, \DateTime $dateTime)
     {
         $this->amount = $amount;
         $this->balance = $balance;
+        $this->dateTime = $dateTime;
     }
 
     /**
@@ -33,5 +40,13 @@ class EventView
     public function getAmount(): int
     {
         return $this->amount;
+    }
+
+    /**
+     * @return \DateTime
+     */
+    public function getDateTime(): \DateTime
+    {
+        return $this->dateTime;
     }
 }

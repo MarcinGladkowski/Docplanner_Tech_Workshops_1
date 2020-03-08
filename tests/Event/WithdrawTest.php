@@ -12,19 +12,19 @@ class WithdrawTest extends TestCase
 {
     public function testShouldCreateNewDepositEvent(): void
     {
-        self::assertInstanceOf(Withdraw::class, new Withdraw(200));
-        self::assertInstanceOf(Event::class, new Withdraw(200));
+        self::assertInstanceOf(Withdraw::class, new Withdraw(200, new \DateTime()));
+        self::assertInstanceOf(Event::class, new Withdraw(200, new \DateTime()));
     }
 
     public function testShouldReturnCorrectAmount(): void
     {
-        self::assertEquals(200,(new Withdraw(200))->getAmount());
+        self::assertEquals(200,(new Withdraw(200, new \DateTime()))->getAmount());
     }
 
     public function testShouldThrowExceptionWhenTryDepositNegativeAmount(): void
     {
         self::expectException(\InvalidArgumentException::class);
 
-        new Withdraw(-200);
+        new Withdraw(-200, new \DateTime());
     }
 }
