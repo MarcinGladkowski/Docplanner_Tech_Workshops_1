@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace Bank\Event;
 
-use http\Exception\InvalidArgumentException;
-
 class Withdraw implements Event
 {
     /**
