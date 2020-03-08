@@ -47,3 +47,9 @@ Data       || Kwota  || Saldo
 15/02/2015 || 1000   || 1500
 02/02/2015 || 500    || 500
 ```
+
+#### Uruchomienie
+* Zbudowanie i uruchomienie komend z *Makefile* ```docker-compose up```
+* Testy ```docker-compose run app make phpunit```
+* CodeSniffer ```docker-compose run app make php-cs-fixer``` 
+* PhpStan ```docker-compose run app make phpstan``` 

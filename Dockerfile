@@ -12,3 +12,5 @@ COPY composer.json /usr/src/app
 WORKDIR /usr/src/app
 
 RUN composer install --no-interaction
+
+CMD ["make"]
