@@ -10,8 +10,9 @@ use Bank\Event\Event;
 use Bank\Event\Withdraw;
 use Bank\View\EventView;
 
-class Bank extends AggregateRoot implements BankService
+final class Bank extends AggregateRoot implements BankService
 {
+    /** @var int */
     protected $balance;
 
     /** @var Projector */
@@ -19,18 +20,18 @@ class Bank extends AggregateRoot implements BankService
 
     public function __construct(Projector $projector)
     {
-        $this->record(new CreateDeposit(0));
+        $this->record(new CreateDeposit(0, new \DateTime()));
         $this->projector = $projector;
     }
 
     public function deposit(int $amount): void
     {
-        $this->record(new Deposit($amount));
+        $this->record(new Deposit($amount, new \DateTime()));
     }
 
     public function withdraw(int $amount): void
     {
-        $this->record(new Withdraw($amount));
+        $this->record(new Withdraw($amount, new \DateTime()));
     }
 
     public function printStatement(): void

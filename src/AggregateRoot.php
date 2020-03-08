@@ -6,8 +6,9 @@ namespace Bank;
 
 use Bank\Event\Event;
 
-class AggregateRoot
+abstract class AggregateRoot
 {
+    /** @var Event[]  */
     protected $events = [];
 
     public function getEvents(): array

@@ -7,4 +7,6 @@ namespace Bank\Event;
 interface Event
 {
     public function getAmount(): int;
+
+    public function getDateTime(): \DateTime;
 }
