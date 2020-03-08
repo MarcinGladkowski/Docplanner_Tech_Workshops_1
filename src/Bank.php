@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Bank;
 
+use Bank\Event\CreateDeposit;
 use Bank\Event\Deposit;
 use Bank\Event\Event;
 use Bank\Event\Withdraw;
@@ -18,7 +19,7 @@ class Bank extends AggregateRoot implements BankService
 
     public function __construct(Projector $projector)
     {
-        $this->balance = 0; // add as event
+        $this->record(new CreateDeposit(0));
         $this->projector = $projector;
     }
 
@@ -43,6 +44,11 @@ class Bank extends AggregateRoot implements BankService
         }, $events);
 
         $this->projector->project($reconstitute);
+    }
+
+    protected function applyCreateDeposit(CreateDeposit $event)
+    {
+        $this->balance = $event->getAmount();
     }
 
     protected function applyDeposit(Deposit $event)
