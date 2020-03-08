@@ -22,4 +22,11 @@ class EventViewTest extends TestCase
     {
         self::assertEquals(200, (new EventView(200,0, new \DateTime()))->getAmount());
     }
+
+    public function testShouldReturnDateTime(): void
+    {
+        $dateTime = new \DateTime();
+
+        self::assertSame($dateTime, (new EventView(200,0, $dateTime))->getDateTime());
+    }
 }

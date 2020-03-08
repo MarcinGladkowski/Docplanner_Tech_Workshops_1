@@ -74,11 +74,11 @@ final class BankServiceTest extends TestCase
 
         $bank->printStatement();
 
-        $this->expectOutputString("|| Kwota || Saldo
-|| 300   || 0    
-|| 200   || 300  
-|| 100   || 100  
-|| 0     || 0    
+        $this->expectOutputString("Data      || Kwota || Saldo
+08/03/2020 || 300   || 0    
+08/03/2020 || 200   || 300  
+08/03/2020 || 100   || 100  
+08/03/2020 || 0     || 0    
 ");
     }
 
