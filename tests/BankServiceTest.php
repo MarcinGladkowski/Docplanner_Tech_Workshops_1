@@ -64,4 +64,22 @@ final class BankServiceTest extends TestCase
 
         $bank->printStatement();
     }
+
+    public function testShouldDisplayEventsOnTerminal(): void
+    {
+        $bank = new Bank(new Projector());
+        $bank->deposit(100);
+        $bank->deposit(200);
+        $bank->withdraw(300);
+
+        $bank->printStatement();
+
+        $this->expectOutputString("|| Kwota || Saldo
+|| 300   || 0    
+|| 200   || 300  
+|| 100   || 100  
+|| 0     || 0    
+");
+    }
+
 }
