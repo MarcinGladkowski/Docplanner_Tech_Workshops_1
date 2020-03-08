@@ -27,5 +27,4 @@ class Deposit implements Event
     {
         return $this->amount;
     }
-
 }

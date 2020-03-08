@@ -38,31 +38,13 @@ class Bank extends AggregateRoot implements BankService
         $aggregate = new self(new Projector());
         $events = $this->events;
 
-        $reconstitute = array_map(static function(Event $event) use ($aggregate) {
+        $reconstitute = \array_map(static function(Event $event) use ($aggregate) {
             $aggregate->record($event);
+
             return new EventView($event->getAmount(), $aggregate->getBalance());
         }, $events);
 
         $this->projector->project($reconstitute);
-    }
-
-    protected function applyCreateDeposit(CreateDeposit $event)
-    {
-        $this->balance = $event->getAmount();
-    }
-
-    protected function applyDeposit(Deposit $event)
-    {
-        $this->balance += $event->getAmount();
-    }
-
-    protected function applyWithdraw(Withdraw $event)
-    {
-        if ($event->getAmount() > $this->balance) {
-            throw new \RuntimeException("Can't withdraw more many than an is in balance");
-        }
-
-        $this->balance -= $event->getAmount();
     }
 
     /**
@@ -71,5 +53,24 @@ class Bank extends AggregateRoot implements BankService
     public function getBalance(): int
     {
         return $this->balance;
+    }
+
+    protected function applyCreateDeposit(CreateDeposit $event): void
+    {
+        $this->balance = $event->getAmount();
+    }
+
+    protected function applyDeposit(Deposit $event): void
+    {
+        $this->balance += $event->getAmount();
+    }
+
+    protected function applyWithdraw(Withdraw $event): void
+    {
+        if ($event->getAmount() > $this->balance) {
+            throw new \RuntimeException("Can't withdraw more many than an is in balance");
+        }
+
+        $this->balance -= $event->getAmount();
     }
 }

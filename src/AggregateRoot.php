@@ -10,6 +10,11 @@ class AggregateRoot
 {
     protected $events = [];
 
+    public function getEvents(): array
+    {
+        return $this->events;
+    }
+
     protected function record(Event $event): void
     {
         $this->events[] = $event;
@@ -21,10 +26,5 @@ class AggregateRoot
         $apply = 'apply' . (new \ReflectionClass($event))->getShortName();
 
         $this->$apply($event);
-    }
-
-    public function getEvents(): array
-    {
-        return $this->events;
     }
 }
