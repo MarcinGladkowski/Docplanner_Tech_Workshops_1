@@ -26,7 +26,7 @@ class Projector
         }
     }
 
-    private function printLineToTerminal(string $date, string $amount,string $balance): void
+    private function printLineToTerminal(string $date, string $amount, string $balance): void
     {
         echo \str_pad($date, 9, ' ') . ' || ' . \str_pad($amount, 5, ' ') . ' || ' . \str_pad($balance, 5, ' ') . \PHP_EOL;
     }
