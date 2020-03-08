@@ -15,9 +15,19 @@ class Projector
     {
         \rsort($reconstitute);
 
-        echo \str_pad('Data', 10, ' ') . '|| ' . \str_pad('Kwota', 5, ' ') . ' || ' . \str_pad('Saldo', 5, ' ') . \PHP_EOL;
+        $this->printLineToTerminal('Data', 'Kwota', 'Saldo');
+
         foreach ($reconstitute as $event) {
-            echo $event->getDateTime()->format('d/m/Y') .  ' || ' . \str_pad((string) $event->getAmount(), 5, ' ') . ' || ' . \str_pad((string) $event->getBalance(), 5, ' ') . \PHP_EOL;
+            $this->printLineToTerminal(
+                $event->getDateTime()->format('d/m/Y'),
+                (string)$event->getAmount(),
+                (string)$event->getBalance()
+            );
         }
+    }
+
+    private function printLineToTerminal(string $date, string $amount,string $balance): void
+    {
+        echo \str_pad($date, 9, ' ') . ' || ' . \str_pad($amount, 5, ' ') . ' || ' . \str_pad($balance, 5, ' ') . \PHP_EOL;
     }
 }
